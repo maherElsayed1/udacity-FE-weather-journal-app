@@ -27,3 +27,26 @@ const server = app.listen(port, listening);
 function listening() {
     console.log(`server running on localhost: ${port}`);
 }
+
+// Get route
+app.get('/', sendData);
+
+function sendData(request, response) {
+    response.send(projectData);
+};
+
+// Post route
+app.post('/', weatherInfo);
+
+function weatherInfo(req, res) {
+
+    newEntry = {
+        temperature: req.body.temperature,
+        date: req.body.newDate,
+        feelings: req.body.feelings
+    }
+
+    projectData.push(newEntry);
+    res.send(projectData);
+    console.log(projectData);
+}
