@@ -13,7 +13,11 @@ document.getElementById('generate').addEventListener('click', generateWeather);
 function generateWeather(e) {
     const feelings = document.getElementById('feelings').value;
     const zip = document.getElementById('zip').value;
-    getWeather(baseURL, zip, apiKey);
+    getWeather(baseURL, zip, apiKey)
+    .then(function(data) {
+        postData('/add', {temp: data.main.temp, date: newDate, feelings: feelings});
+    })
+    .then(updateUI());
 }
 
 /* Function to GET Web API Data*/
@@ -21,7 +25,6 @@ const getWeather = async (baseURL, zip, key) => {
     const res = await fetch(baseURL+zip+key);
     try {
         const data = await res.json();
-        console.log(data);
         return data;
     } catch(error) {
         console.log('error', error);
@@ -42,8 +45,20 @@ const postData = async (url = '', data = {}) => {
 
     try {
         const newData = await response.json();
-        console.log(newData);
         return newData;
+    } catch(error) {
+        console.log("error", error);
+    }
+}
+
+/* Function to GET Project Data */
+const updateUI = async () => {
+    const request = await fetch('/all');
+    try {
+        const allData = await request.json();
+        document.getElementById('date').innerHTML = allData[0].date;
+        document.getElementById('temp').innerHTML = allData[0].temp;
+        document.getElementById('content').innerHTML = allData[0].feelings;
     } catch(error) {
         console.log("error", error);
     }
