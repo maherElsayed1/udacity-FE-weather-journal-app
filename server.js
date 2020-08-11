@@ -29,19 +29,19 @@ function listening() {
 }
 
 // Get route
-app.get('/', sendData);
+app.get('/all', sendData);
 
 function sendData(request, response) {
     response.send(projectData);
 };
 
 // Post route
-app.post('/', weatherInfo);
+app.post('/add', weatherInfo);
 
 function weatherInfo(req, res) {
 
     newEntry = {
-        temperature: req.body.temperature,
+        temp: req.body.temp,
         date: req.body.newDate,
         feelings: req.body.feelings
     }
