@@ -46,6 +46,6 @@ function weatherInfo(req, res) {
         feelings: req.body.feelings
     };
 
-    projectData.push(newEntry);
+    projectData.unshift(newEntry);
     res.send(projectData);
 }
