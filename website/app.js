@@ -13,11 +13,15 @@ document.getElementById('generate').addEventListener('click', generateWeather);
 function generateWeather(e) {
     const feelings = document.getElementById('feelings').value;
     const zip = document.getElementById('zip').value;
-    getWeather(baseURL, zip, apiKey)
-    .then(function(data) {
-        postData('/add', {temp: data.main.temp, date: newDate, feelings: feelings});
-    })
-    .then(updateUI());
+    if(zip !== '') {
+        getWeather(baseURL, zip, apiKey)
+        .then(function(data) {
+            postData('/add', {temp: data.main.temp, date: newDate, feelings: feelings});
+            updateUI();
+        });
+    } else {
+        alert('please enter zip code')
+    }
 }
 
 /* Function to GET Web API Data*/
